@@ -1,0 +1,8 @@
+Critério,Valor,Passou,Elimina?
+≥ 100 operações fora da amostra,517,✅,sim
+"Expectativa > 0 R (líquida, com swap)",-0.019,❌,sim
+"Fator de lucro > 1,2",0.92,❌,sim
+"Melhor que aleatório (p < 0,05)",p = 0.093,❌,sim
+Nenhum ano com DD > 20%,pior -9.6%,✅,sim
+Frequência de day trade (≥ 2/semana),1.7/sem,❌,informativo
+Positivo no swap conservador,-0.019,❌,informativo

@@ -1,0 +1,42 @@
+{
+  "nome": "Terminal Âmbar",
+  "versao": "1.0",
+  "definida_em": "2026-10-18",
+  "fontes": {
+    "titulos": "Space Grotesk",
+    "texto": "IBM Plex Sans",
+    "numeros_e_codigo": "IBM Plex Mono"
+  },
+  "escuro": {
+    "fundo": "#0E1726",
+    "superficie": "#16233A",
+    "borda": "#26374F",
+    "texto": "#F5F2EA",
+    "texto_suave": "#AEBBCD",
+    "primaria": "#E9A23B",
+    "texto_sobre_primaria": "#0E1726",
+    "secundaria": "#7FB3E6",
+    "secundaria_texto": "#9CC4EC",
+    "positivo": "#5FCF9B",
+    "positivo_fundo": "#173B33",
+    "negativo": "#F08A6C",
+    "negativo_fundo": "#3D2420",
+    "info_fundo": "#1C3350"
+  },
+  "claro": {
+    "fundo": "#F5F2EA",
+    "superficie": "#FFFDF8",
+    "borda": "#E2DDD0",
+    "texto": "#0E1726",
+    "texto_suave": "#4A5363",
+    "primaria": "#B87510",
+    "texto_sobre_primaria": "#FFFDF8",
+    "secundaria": "#2F6FA8",
+    "secundaria_texto": "#2F6FA8",
+    "positivo": "#1F7A4D",
+    "positivo_fundo": "#E1F0E6",
+    "negativo": "#B4441C",
+    "negativo_fundo": "#F7E3D9",
+    "info_fundo": "#E3ECF5"
+  }
+}

@@ -1,0 +1,13 @@
+Day trading com dados, não com achismo. 📊
+
+Este é o primeiro post da LHS Quant Lab, um laboratório de day trading baseado em evidência. Nossos objetivos:
+
+1️⃣ Ensinar você a testar os seus próprios setups, com custos reais e validação honesta.
+2️⃣ Construir a base do day trading: sessões, gestão de risco e os números que todo trader precisa conhecer.
+3️⃣ Analisar os setups mais populares com dados: anos de histórico, custos e relatório completo.
+
+Fazemos análises quantitativas, backtests e educação. Não vendemos sinais, não prometemos lucro e não recomendamos ativos.
+
+👇 Comente qual setup você quer ver testado. O mais pedido vira o próximo backtest.
+
+#daytrading #trading #backtest #forex #tradingquantitativo #educacaofinanceira #analisetecnica #mercadofinanceiro

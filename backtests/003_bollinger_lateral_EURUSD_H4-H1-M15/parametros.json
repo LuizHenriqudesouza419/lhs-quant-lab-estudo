@@ -1,0 +1,127 @@
+{
+  "__DW_SCOPE__": {
+    "output_cache": {},
+    "output-232edeb1-e17f-4df2-8247-6f56fe4bbfa0": {
+      "enable_for_types": "<function __DW_OUTPUT_FORMATTER__.<locals>.enable_formatter_for_types at 0x000001C583CA53A0>",
+      "disable": "<function __DW_OUTPUT_FORMATTER__.<locals>.disable_formatter at 0x000001C583CA5440>"
+    }
+  },
+  "BACKTEST_ID": "003",
+  "SIMBOLO": "EURUSD",
+  "TFS": [
+    "H4",
+    "H1",
+    "M15"
+  ],
+  "DATA_INICIO": "2010-01-01",
+  "BB_PERIODO": 21,
+  "BB_DESVIOS": 2.0,
+  "MEDIA_LONGA": 200,
+  "LATERAL_BARRAS": 20,
+  "ATR_PERIODO": 14,
+  "PADRAO": {
+    "gatilho": "fechou fora",
+    "lateral_k": 0.5,
+    "stop_atr": 3.0,
+    "zerar": true
+  },
+  "GRADE_GATILHO": [
+    "fechou fora",
+    "voltou para dentro"
+  ],
+  "GRADE_LATERAL": [
+    null,
+    1.0,
+    0.5,
+    0.25
+  ],
+  "GRADE_STOP": [
+    1.5,
+    2.0,
+    3.0
+  ],
+  "GRADE_ZERAR": [
+    true,
+    false
+  ],
+  "SESSAO": [
+    9,
+    21
+  ],
+  "HORA_ZERAR": 23,
+  "MULT_SPREAD_VIRADA": 1.5,
+  "SLIPPAGE_PONTOS": 2,
+  "COMISSAO_USD_LOTE": 0.0,
+  "RISCO_POR_TRADE": 0.01,
+  "INICIO_OOS": {
+    "H4": "2021-01-01",
+    "H1": "2021-01-01",
+    "M15": "2025-01-01"
+  },
+  "MIN_TRADES_TREINO": 60,
+  "N_SIM": 300,
+  "SEED": 42,
+  "MIN_TRADES_SEMANA": 2.0,
+  "MAX_INTERVALO_P90": 5,
+  "CORES": {
+    "fundo": "#0E1726",
+    "superficie": "#16233A",
+    "borda": "#26374F",
+    "texto": "#F5F2EA",
+    "texto_suave": "#AEBBCD",
+    "primaria": "#E9A23B",
+    "texto_sobre_primaria": "#0E1726",
+    "secundaria": "#7FB3E6",
+    "secundaria_texto": "#9CC4EC",
+    "positivo": "#5FCF9B",
+    "positivo_fundo": "#173B33",
+    "negativo": "#F08A6C",
+    "negativo_fundo": "#3D2420",
+    "info_fundo": "#1C3350"
+  },
+  "PONTO": 1e-05,
+  "CONTRATO": 100000.0,
+  "SLIP": 2e-05,
+  "DUR_H": {
+    "H4": 4,
+    "H1": 1,
+    "M15": 0.25
+  },
+  "HORAS_VIRADA": {
+    "H4": [
+      20,
+      0
+    ],
+    "H1": [
+      22,
+      23,
+      0
+    ],
+    "M15": [
+      22,
+      23,
+      0
+    ]
+  },
+  "MELHOR_TF": "H4",
+  "ESCOLHA": {
+    "H4": {
+      "gatilho": "voltou para dentro",
+      "lateral_k": 0.25,
+      "stop_atr": 1.5,
+      "zerar": false
+    },
+    "H1": {
+      "gatilho": "voltou para dentro",
+      "lateral_k": 0.5,
+      "stop_atr": 3.0,
+      "zerar": true
+    },
+    "M15": {
+      "gatilho": "fechou fora",
+      "lateral_k": 0.5,
+      "stop_atr": 3.0,
+      "zerar": false
+    }
+  }
+}

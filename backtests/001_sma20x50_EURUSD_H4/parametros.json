@@ -1,0 +1,14 @@
+{
+  "id": "001",
+  "simbolo": "EURUSD",
+  "timeframe": "H4",
+  "media_rapida": 20,
+  "media_lenta": 50,
+  "slippage_pontos": 2,
+  "comissao_pct": 0.0,
+  "data_inicio": "2010-01-01",
+  "data_corte": "2020-01-01",
+  "dados_ate": "2026-10-16",
+  "seed": 42,
+  "percentil_vs_aleatorio": 41.0
+}

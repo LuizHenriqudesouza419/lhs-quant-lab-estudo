@@ -1,0 +1,8 @@
+Critério,Valor,Passou
+≥ 100 operações fora da amostra,1052,✅
+Expectativa > 0 R (líquida),+0.024,✅
+"Fator de lucro > 1,2",1.04,❌
+"Melhor que aleatório (p < 0,05)",p = 0.077,❌
+"PBO < 0,5",0.13,✅
+Nenhum ano com DD > 20%,pior -20.5%,❌
+≥ 2 trades/semana e p90 ≤ 5 dias úteis,1.5/sem · p90 8,❌

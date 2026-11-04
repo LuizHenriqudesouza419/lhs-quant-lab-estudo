@@ -1,0 +1,115 @@
+{
+  "BACKTEST_ID": "004.2",
+  "SIMBOLO": "EURUSD",
+  "TFS": [
+    "H1"
+  ],
+  "DATA_INICIO": "2010-01-01",
+  "ABERTURA_LONDRES": 10,
+  "CORTE_ENTRADA": 15,
+  "BUFFER_PIPS": 1.0,
+  "MEDIANA_DIAS": 20,
+  "EMA_TEND": 200,
+  "EMA_MEDIA": 50,
+  "INCLINACAO_BARRAS": 20,
+  "PADRAO": {
+    "inicio_faixa": 0,
+    "entrada": "ordem stop",
+    "stop": "lado oposto",
+    "alvo_r": 0.0,
+    "faixa": "todas",
+    "tendencia": "sem filtro"
+  },
+  "GRADE_INICIO": [
+    0,
+    3
+  ],
+  "GRADE_ENTRADA": [
+    "ordem stop",
+    "fechamento"
+  ],
+  "GRADE_STOP": [
+    "lado oposto",
+    "meio"
+  ],
+  "GRADE_ALVO": [
+    1.0,
+    1.5,
+    2.0,
+    0.0
+  ],
+  "GRADE_FAIXA": [
+    "todas",
+    "estreita"
+  ],
+  "GRADE_TEND": [
+    "sem filtro",
+    "a favor do H4"
+  ],
+  "HORA_ZERAR": 23,
+  "HORAS_VIRADA": [
+    22,
+    23,
+    0
+  ],
+  "MULT_SPREAD_VIRADA": 1.5,
+  "SLIPPAGE_PONTOS": 2,
+  "COMISSAO_USD_LOTE": 0.0,
+  "PASTA_CONTA": "EURUSDm",
+  "MULT_SPREAD_SEM_DADO": 0.5,
+  "RISCO_POR_TRADE": 0.01,
+  "INICIO_OOS": {
+    "H1": "2021-01-01"
+  },
+  "TREINO_MESES": 36,
+  "TESTE_MESES": 6,
+  "INICIO_WF": "2010-10-01",
+  "MIN_TRADES_TREINO": 100,
+  "N_BLOCOS_PBO": 10,
+  "N_SIM": 300,
+  "SEED": 42,
+  "MIN_TRADES_SEMANA": 2.0,
+  "MAX_INTERVALO_P90": 5,
+  "CORES": {
+    "fundo": "#0E1726",
+    "superficie": "#16233A",
+    "borda": "#26374F",
+    "texto": "#F5F2EA",
+    "texto_suave": "#AEBBCD",
+    "primaria": "#E9A23B",
+    "texto_sobre_primaria": "#0E1726",
+    "secundaria": "#7FB3E6",
+    "secundaria_texto": "#9CC4EC",
+    "positivo": "#5FCF9B",
+    "positivo_fundo": "#173B33",
+    "negativo": "#F08A6C",
+    "negativo_fundo": "#3D2420",
+    "info_fundo": "#1C3350"
+  },
+  "PONTO": 1e-05,
+  "CONTRATO": 100000.0,
+  "SLIP": 2e-05,
+  "BUF": 0.0001,
+  "DUR": {
+    "M15": "0 days 00:15:00",
+    "H1": "0 days 01:00:00",
+    "H4": "0 days 04:00:00"
+  },
+  "BARRAS_HORA": {
+    "M15": 4,
+    "H1": 1
+  },
+  "TF": "H1",
+  "NOME_PADRAO": "00h|ordem stop|stop lado oposto|alvo 0R|todas|sem filtro",
+  "CFG_004": {
+    "inicio_faixa": 3,
+    "entrada": "ordem stop",
+    "stop": "lado oposto",
+    "alvo_r": 0.0,
+    "faixa": "todas",
+    "tendencia": "a favor do H4"
+  },
+  "EXP_WF": 0.0235391634910775,
+  "P_VALOR": 0.07666666666666666,
+  "PBO": 0.13095238095238096
+}

@@ -1,0 +1,73 @@
+{
+  "id": "001.2",
+  "base": "001.1",
+  "simbolo": "EURUSD",
+  "timeframes": [
+    "H4",
+    "H1",
+    "M15"
+  ],
+  "media_rapida": 20,
+  "media_lenta": 50,
+  "saida": "Chandelier (trailing ATR)",
+  "atr_periodo": 14,
+  "grade_k": [
+    2.0,
+    2.5,
+    3.0,
+    4.0,
+    5.0
+  ],
+  "k_fixo": 3.0,
+  "min_trades_treino": 30,
+  "config_tf": {
+    "H4": {
+      "minutos": 240,
+      "sessao": null,
+      "hora_zerar": null,
+      "inicio_oos": "2014-01-01",
+      "treino_meses": 48,
+      "teste_meses": 12
+    },
+    "H1": {
+      "minutos": 60,
+      "sessao": [
+        9,
+        21
+      ],
+      "hora_zerar": 23,
+      "inicio_oos": "2015-01-01",
+      "treino_meses": 48,
+      "teste_meses": 12
+    },
+    "M15": {
+      "minutos": 15,
+      "sessao": [
+        9,
+        21
+      ],
+      "hora_zerar": 23,
+      "inicio_oos": "2023-11-01",
+      "treino_meses": 12,
+      "teste_meses": 3
+    }
+  },
+  "slippage_pontos": 2,
+  "comissao_pct": 0.0,
+  "ml": {
+    "modelo": "regressão logística (C=0.5)",
+    "prob_minima": 0.5,
+    "min_trades_ml": 100,
+    "auc_oos": {
+      "H4": 0.528,
+      "H1": 0.526,
+      "M15": 0.53
+    }
+  },
+  "dados_ate": {
+    "H4": "2026-10-16",
+    "H1": "2026-10-16",
+    "M15": "2026-10-16"
+  },
+  "seed": 42
+}

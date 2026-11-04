@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Critérios de Backtest</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@500&display=block" rel="stylesheet">
+<style>
+:root{--fundo:#F5F2EA;--sup:#FFFDF8;--borda:#E2DDD0;--txt:#0E1726;--suave:#4A5363;--amb:#B87510;
+  --azul:#2F6FA8;--pos:#1F7A4D;--pos-f:#E1F0E6;--neg:#B4441C;--neg-f:#F7E3D9;--info:#E3ECF5}
+*{box-sizing:border-box}
+@page{size:A4;margin:16mm 15mm}
+body{margin:0;background:#fff;color:var(--txt);font-family:"IBM Plex Sans","Segoe UI",sans-serif;font-size:10.5pt;line-height:1.5}
+h1,h2,h3{font-family:"Space Grotesk","Segoe UI",sans-serif;line-height:1.15;margin:0}
+.capa{min-height:250mm;display:flex;flex-direction:column;justify-content:center;gap:18px;page-break-after:always}
+.eyebrow{font-family:"IBM Plex Mono",monospace;letter-spacing:4px;text-transform:uppercase;color:var(--amb);font-size:10pt}
+.capa h1{font-size:40pt;letter-spacing:-1px}
+.capa h1 span{color:var(--amb)}
+.capa p{font-size:13pt;color:var(--suave);max-width:150mm}
+.capa .rodape{margin-top:40px;font-family:"IBM Plex Mono",monospace;font-size:9pt;color:var(--suave)}
+h2{font-size:20pt;margin:0 0 8px}
+h3{font-size:12pt;margin:14px 0 4px;color:var(--azul)}
+p{margin:4px 0 8px}
+.crit{page-break-inside:avoid;break-inside:avoid;border:1px solid var(--borda);border-radius:10px;padding:14px 18px;margin:0 0 14px;background:#fff}
+.crit .topo{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+.crit .num{font-family:"IBM Plex Mono",monospace;color:var(--amb);font-size:14pt}
+.crit h2{font-size:15pt;margin:0}
+.regra{display:inline-block;font-family:"IBM Plex Mono",monospace;background:var(--info);color:var(--azul);padding:3px 10px;border-radius:6px;font-size:10pt;margin:2px 0 6px}
+.grade{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}
+.caixa{page-break-inside:avoid;break-inside:avoid;border-left:4px solid var(--amb);background:var(--fundo);padding:8px 12px;border-radius:0 8px 8px 0;margin:8px 0}
+.caixa.pos{border-color:var(--pos);background:var(--pos-f)}
+.caixa.neg{border-color:var(--neg);background:var(--neg-f)}
+.caixa .tit{display:block;font-weight:600;font-size:9pt;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px}
+code,.mono{font-family:"IBM Plex Mono",monospace;font-size:9.5pt}
+table{border-collapse:collapse;width:100%;font-size:9.5pt;margin:6px 0 10px}
+th,td{border:1px solid var(--borda);padding:5px 8px;text-align:left;vertical-align:top}
+th{background:var(--fundo)}
+.ok{color:var(--pos);font-weight:600}.nao{color:var(--neg);font-weight:600}
+.secao{page-break-before:always}
+ul{margin:4px 0 8px;padding-left:20px}
+li{margin:2px 0}
+</style>
+</head>
+<body>
+
+<section class="capa">
+  <div class="eyebrow">LHS Quant Lab · Guia de método</div>
+  <h1>Os critérios de<br><span>aprovação</span> de um backtest</h1>
+  <p>O que cada critério mede, como é calculado, por que o limite é aquele e como ler o resultado — com exemplos dos
+  backtests que já fizemos no laboratório.</p>
+  <p>Um setup só é <b>aprovado</b> quando passa em <b>todos</b> os critérios. Basta um falhar para ele ser reprovado.</p>
+  <div class="rodape">Versão de 20/10/2026 · Exemplos: backtests 001 a 004.1 (EURUSD)</div>
+</section>
+
+<section>
+  <div class="eyebrow">Antes dos critérios</div>
+  <h2>Cinco ideias que aparecem em todos</h2>
+
+  <h3>1. R — a unidade de resultado</h3>
+  <p><b>1 R é o quanto você perde se o stop for atingido.</b> Se o stop está a 20 pips da entrada, 1 R = 20 pips.
+  Uma operação que ganha 30 pips nesse caso rendeu +1,5 R. Medir em R deixa todos os setups comparáveis, qualquer que
+  seja o tamanho do stop, o par ou o tempo gráfico. Com 1% do capital arriscado por operação, +1 R = +1% da conta.</p>
+
+  <h3>2. Sem custos × líquido</h3>
+  <p><b>Sem custos</b> é o resultado só com o movimento do preço. <b>Líquido</b> desconta spread (de cada barra),
+  slippage (2 pontos por lado) e comissão. A diferença mostra o quanto o custo come: se o setup só ganha sem custos,
+  ele tem vantagem, mas não paga a conta.</p>
+
+  <h3>3. Dentro × fora da amostra</h3>
+  <p><b>Dentro da amostra</b> (treino) é o período usado para escolher parâmetros. <b>Fora da amostra</b> é o período
+  que o setup nunca viu. <b>Todos os critérios são aplicados fora da amostra</b>, porque é o único resultado honesto:
+  dentro da amostra, qualquer setup otimizado parece bom.</p>
+
+  <h3>4. Walk-forward</h3>
+  <p>Em vez de uma única divisão treino/teste, repete o processo: otimiza em 36 meses, opera os 6 seguintes, anda 6
+  meses e repete. Junta muitos anos de resultado fora da amostra e imita o trader que reotimiza de tempos em tempos.</p>
+
+  <h3>5. Sem look-ahead</h3>
+  <p>O sinal só usa dados da <b>barra já fechada</b>; a entrada é na abertura da barra seguinte (ou numa ordem stop
+  com preço conhecido antes). Usar informação do futuro é o erro mais comum — e o que mais infla resultados.</p>
+
+  <div class="caixa"><span class="tit">Resumo dos 7 critérios</span>
+  <table>
+    <tr><th>#</th><th>Critério</th><th>Regra</th><th>Pergunta que responde</th></tr>
+    <tr><td>1</td><td>Número de operações</td><td>≥ 100 fora da amostra</td><td>Há dados suficientes para concluir algo?</td></tr>
+    <tr><td>2</td><td>Expectativa</td><td>&gt; 0 R líquida</td><td>Ganha dinheiro depois dos custos?</td></tr>
+    <tr><td>3</td><td>Fator de lucro</td><td>&gt; 1,2</td><td>A margem é grande o bastante para aguentar a vida real?</td></tr>
+    <tr><td>4</td><td>Melhor que o acaso</td><td>p &lt; 0,05</td><td>O sinal acrescenta algo ou é sorte?</td></tr>
+    <tr><td>5</td><td>PBO</td><td>&lt; 0,5</td><td>A otimização encontrou algo real ou só se ajustou ao ruído?</td></tr>
+    <tr><td>6</td><td>Drawdown anual</td><td>nenhum ano &lt; −20%</td><td>Dá para aguentar emocional e financeiramente?</td></tr>
+    <tr><td>7</td><td>Frequência</td><td>≥ 2/semana e p90 ≤ 5 dias úteis</td><td>Funciona como day trade de verdade?</td></tr>
+  </table></div>
+</section>
+
+<section class="secao">
+  <div class="crit">
+    <div class="topo"><span class="num">01</span><h2>Número de operações</h2></div>
+    <span class="regra">≥ 100 operações fora da amostra</span>
+    <p><b>O que mede:</b> se existe amostra suficiente para separar habilidade de sorte.</p>
+    <p><b>Por que 100:</b> o resultado médio de poucas operações oscila muito. Com 30 operações, um setup sem vantagem
+    nenhuma pode facilmente mostrar +0,2 R de média só por acaso. Com 100 ou mais, essa oscilação cai para menos da
+    metade (ela diminui com a raiz do número de operações). 100 é o mínimo; quanto mais, melhor.</p>
+    <div class="grade">
+      <div class="caixa neg"><span class="tit">Exemplo reprovado</span>003 (Bollinger, H4): +0,105 R fora da amostra, mas com só
+      <b>36 operações</b> em quase 6 anos. Bonito, mas inconclusivo.</div>
+      <div class="caixa pos"><span class="tit">Exemplo aprovado</span>004.1 (rompimento da Ásia, H1): <b>1.069 operações</b> em 13
+      anos fora da amostra.</div>
+    </div>
+    <p><b>Armadilha:</b> desconfie de resultado excelente com poucas operações — é o mais comum em vídeos e prints.</p>
+  </div>
+
+  <div class="crit">
+    <div class="topo"><span class="num">02</span><h2>Expectativa líquida</h2></div>
+    <span class="regra">Expectativa &gt; 0 R, já com custos</span>
+    <p><b>O que mede:</b> quanto o setup ganha (ou perde), em média, <b>por operação</b>, depois de spread, slippage e comissão.</p>
+    <p><b>Como calcula:</b> média dos resultados em R. Equivalente a
+    <span class="mono">taxa de acerto × ganho médio − taxa de erro × perda média</span>.</p>
+    <p><b>Por que importa:</b> é o critério mais direto. Taxa de acerto alta não basta: o M15 do 003 acertava 58% das
+    vezes e perdia dinheiro, porque o ganho médio era bem menor que a perda média.</p>
+    <div class="grade">
+      <div class="caixa neg"><span class="tit">Custos matando a vantagem</span>002.1 (M15): ≈ 0 R sem custos e −0,24 R líquido — o
+      custo de ~0,2 R por operação decidiu tudo.</div>
+      <div class="caixa pos"><span class="tit">Positivo, mas fino</span>004.1 (H1): +0,105 R sem custos e +0,020 R líquido.</div>
+    </div>
+    <p><b>Armadilha:</b> olhar só o resultado sem custos. Sempre compare as duas linhas.</p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="crit">
+    <div class="topo"><span class="num">03</span><h2>Fator de lucro</h2></div>
+    <span class="regra">Fator de lucro &gt; 1,2</span>
+    <p><b>O que mede:</b> quanto o setup ganha para cada 1 que perde. <span class="mono">soma dos ganhos ÷ soma das perdas</span>.
+    1,0 é empate; 1,5 significa que os ganhos somam 50% a mais que as perdas.</p>
+    <p><b>Por que 1,2 e não 1,0:</b> é a <b>margem de segurança</b>. Na vida real, o resultado costuma ser pior que no
+    backtest: slippage maior em notícias, spreads diferentes, dias sem operar, erros de execução, e a própria vantagem
+    tende a encolher com o tempo. Um setup com fator 1,04 vira prejuízo com pouca coisa dando errado.</p>
+    <div class="caixa neg"><span class="tit">Exemplo</span>004.1: expectativa positiva (+0,020 R), mas fator de lucro <b>1,04</b>.
+    Com comissão de US$ 7 por lote, já fica negativo — exatamente o que o critério tenta evitar.</div>
+    <p><b>Armadilha:</b> fator de lucro altíssimo (acima de 3) com poucas operações costuma ser sorte ou look-ahead.</p>
+  </div>
+
+  <div class="crit">
+    <div class="topo"><span class="num">04</span><h2>Melhor que o acaso</h2></div>
+    <span class="regra">p-valor &lt; 0,05 contra entradas aleatórias</span>
+    <p><b>O que mede:</b> se o <b>sinal</b> acrescenta alguma coisa, ou se qualquer entrada com as mesmas regras de
+    saída daria o mesmo resultado.</p>
+    <p><b>Como calcula:</b> simulamos 300 versões do setup em que o sinal é trocado pelo acaso — mantendo tudo o mais
+    igual (mesmos dias, mesmo stop, mesmo alvo, mesmos custos). No rompimento da Ásia, sorteamos a <b>direção</b>
+    (cara ou coroa); no Bollinger, sorteamos o <b>momento</b> de entrada. O <b>p-valor</b> é a fração das simulações
+    aleatórias que foram tão boas quanto o setup real. p = 0,017 quer dizer que só 1,7% das versões aleatórias
+    empataram ou venceram.</p>
+    <p><b>Por que 0,05:</b> é o limite usual em estatística: aceitamos no máximo 5% de chance de o resultado ser sorte.</p>
+    <div class="grade">
+      <div class="caixa pos"><span class="tit">Passou</span>004.1: setup +0,020 R × aleatório −0,060 R (p = 0,017). A direção do
+      rompimento carrega informação.</div>
+      <div class="caixa neg"><span class="tit">Passar não basta</span>002.1: p = 0,04, mas o setup perdia −0,22 R e o aleatório −0,26 R.
+      Ele só perdia menos que o acaso.</div>
+    </div>
+    <p><b>Armadilha:</b> esse critério sozinho não aprova nada — ele diz se há sinal, não se o sinal paga os custos.</p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="crit">
+    <div class="topo"><span class="num">05</span><h2>PBO — probabilidade de sobreajuste</h2></div>
+    <span class="regra">PBO &lt; 0,5</span>
+    <p><b>O que mede:</b> quando testamos muitas combinações de parâmetros e escolhemos a melhor, ela é melhor de
+    verdade ou só teve sorte naquele período? O PBO (<i>Probability of Backtest Overfitting</i>, Bailey et al.) responde
+    a isso.</p>
+    <p><b>Como calcula (método CSCV):</b> dividimos o histórico em 10 blocos e testamos as 252 formas de usar metade
+    deles como treino e a outra metade como teste. Em cada uma, pegamos a combinação campeã do treino e vemos em que
+    posição ela fica no teste. <b>PBO = fração das vezes em que a campeã fica abaixo da mediana no teste.</b></p>
+    <p><b>Por que 0,5:</b> 0,5 é o que se espera de pura sorte (a campeã cai na metade de baixo metade das vezes). Abaixo
+    disso, a escolha tem algum valor; perto de 0, as campeãs continuam fortes fora do treino.</p>
+    <div class="grade">
+      <div class="caixa neg"><span class="tit">Sobreajuste</span>002.1: PBO = 0,77 — a campeã do treino caía na metade de baixo em
+      77% das vezes.</div>
+      <div class="caixa pos"><span class="tit">Escolha consistente</span>004.1: PBO = 0,12 — as combinações que lideram tendem a
+      continuar acima da mediana.</div>
+    </div>
+    <p><b>Armadilha:</b> quanto mais combinações você testa, maior a chance de achar uma "ótima" por acaso. Grades
+    pequenas e PBO baixo andam juntos.</p>
+  </div>
+
+  <div class="crit">
+    <div class="topo"><span class="num">06</span><h2>Drawdown anual</h2></div>
+    <span class="regra">Nenhum ano com drawdown pior que −20%</span>
+    <p><b>O que mede:</b> a maior queda da conta, do topo até o fundo, <b>dentro de cada ano</b>, arriscando 1% por operação.</p>
+    <p><b>Por que importa:</b> um setup lucrativo no total pode ser impossível de operar. Depois de perder 20% em poucos
+    meses, quase todo trader abandona o método (ou aumenta o risco para recuperar, o que é pior). E perdas crescem
+    exponencialmente: para recuperar −20% é preciso +25%; para recuperar −50%, +100%.</p>
+    <div class="grade">
+      <div class="caixa neg"><span class="tit">Reprovado</span>002.1: pior ano com −57% (2024).</div>
+      <div class="caixa pos"><span class="tit">Aprovado, com ressalva</span>004.1: pior ano com −14,7%. Mas os anos ruins se
+      encadearam (2016–2021) e a queda total do período chegou a −48%.</div>
+    </div>
+    <p><b>Armadilha:</b> olhar só o drawdown anual pode esconder sequências de anos ruins. Por isso o relatório mostra
+    também o drawdown máximo do período inteiro e a curva de capital.</p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="crit">
+    <div class="topo"><span class="num">07</span><h2>Frequência de day trade</h2></div>
+    <span class="regra">≥ 2 operações por semana e intervalo p90 ≤ 5 dias úteis</span>
+    <p><b>O que mede:</b> se o setup funciona como <b>day trade</b>, que é o foco do laboratório. São duas condições:</p>
+    <ul>
+      <li><b>Média de pelo menos 2 operações por semana</b> — senão não é uma rotina de day trade.</li>
+      <li><b>Intervalo p90 de até 5 dias úteis</b> — em 90% das vezes, o intervalo entre um dia com operação e o
+      próximo é de no máximo uma semana. Evita setups que operam muito em algumas semanas e somem por meses.</li>
+    </ul>
+    <p><b>Por que importa:</b> poucas operações por ano deixam a amostra pequena, o resultado demora anos para aparecer e
+    o trader fica parado. Além disso, um setup que segura posição de um dia para o outro deixa de ser day trade (paga
+    swap e corre risco de gap).</p>
+    <div class="grade">
+      <div class="caixa neg"><span class="tit">Reprovado</span>003 (H4): 0,1 operação por semana, com até 99 dias úteis entre operações.</div>
+      <div class="caixa neg"><span class="tit">Reprovado por pouco</span>004.1: 1,6 por semana, p90 de 8 dias úteis (os filtros de
+      tendência e de faixa estreita cortam muitos dias).</div>
+    </div>
+    <p><b>Exceção decidida antes:</b> no 003.1, que segurava posição durante a noite (swing), esse critério foi
+    informativo e não eliminatório — e isso foi decidido <b>antes</b> de ver os resultados.</p>
+  </div>
+
+  <div class="crit">
+    <div class="topo"><span class="num">+</span><h2>Métricas que aparecem no relatório (sem limite fixo)</h2></div>
+    <table>
+      <tr><th>Métrica</th><th>O que é</th><th>Como ler</th></tr>
+      <tr><td>Taxa de acerto</td><td>% de operações vencedoras</td><td>Sozinha não diz nada; olhe junto com o payoff</td></tr>
+      <tr><td>Payoff</td><td>ganho médio ÷ perda média</td><td>Acerto 40% precisa de payoff &gt; 1,5 para empatar</td></tr>
+      <tr><td>Sharpe</td><td>retorno médio diário ÷ oscilação, anualizado</td><td>&gt; 1 é bom; negativo, perde dinheiro</td></tr>
+      <tr><td>Sortino</td><td>como o Sharpe, mas só pune a oscilação para baixo</td><td>Melhor que o Sharpe para setups assimétricos</td></tr>
+      <tr><td>Drawdown máximo</td><td>maior queda do período inteiro</td><td>Compare com o quanto você aguentaria perder</td></tr>
+      <tr><td>Retorno com 1% de risco</td><td>resultado acumulado da conta</td><td>Inclui juros compostos; depende do período</td></tr>
+      <tr><td>Comissão US$ 7</td><td>sensibilidade a uma conta com comissão</td><td>Se vira negativo, a margem é pequena demais</td></tr>
+    </table>
+  </div>
+
+  <div class="caixa"><span class="tit">Como um setup é aprovado</span>
+  Todos os 7 critérios, fora da amostra, com custos. Mesmo aprovado, o próximo passo não é a conta real: é
+  rodar em <b>conta demo</b> pelo tempo necessário para comparar o resultado real com o do backtest.
+  Educação e pesquisa de método — não é recomendação de investimento.</div>
+</section>
+
+</body>
+</html>

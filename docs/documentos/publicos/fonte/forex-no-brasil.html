@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Forex a partir do Brasil — LHS Quant Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fundo: #F5F2EA; --superficie: #FFFDF8; --borda: #E2DDD0;
+    --texto: #0E1726; --suave: #4A5363; --primaria: #B87510;
+    --secundaria: #2F6FA8; --positivo: #1F7A4D; --positivo-fundo: #E1F0E6;
+    --negativo: #B4441C; --negativo-fundo: #F7E3D9; --info-fundo: #E3ECF5;
+    --escuro: #0E1726; --ambar: #E9A23B;
+  }
+  @page { size: A4; margin: 18mm 17mm 18mm 17mm; }
+  @page :first { margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #FFFFFF; color: var(--texto); }
+  body { font: 10.5pt/1.55 "IBM Plex Sans", "Segoe UI", sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  h1, h2, h3 { font-family: "Space Grotesk", "Segoe UI", sans-serif; line-height: 1.2; margin: 0; }
+  h2 { font-size: 17pt; margin: 0 0 10pt; padding-bottom: 6pt; border-bottom: 2px solid var(--primaria); break-after: avoid; }
+  h2 .num { font-family: "IBM Plex Mono", monospace; color: var(--primaria); font-size: 12pt; margin-right: 6pt; }
+  h3 { font-size: 12pt; margin: 14pt 0 5pt; break-after: avoid; }
+  p { margin: 0 0 8pt; }
+  ul, ol { margin: 0 0 8pt; padding-left: 16pt; }
+  li { margin-bottom: 4pt; }
+  strong { font-weight: 600; }
+  .mono { font-family: "IBM Plex Mono", monospace; }
+  section { break-before: page; }
+  .capa { break-before: auto; background: var(--escuro); color: #F5F2EA; margin: 0; padding: 30mm 22mm 20mm; height: 297mm; display: flex; flex-direction: column; }
+  .capa .marca { font-family: "IBM Plex Mono", monospace; color: var(--ambar); letter-spacing: .12em; font-size: 10pt; }
+  .capa h1 { font-size: 34pt; margin: 34mm 0 8mm; max-width: 150mm; }
+  .capa h1 em { font-style: normal; color: var(--ambar); }
+  .capa .sub { font-size: 13pt; color: #AEBBCD; max-width: 140mm; }
+  .capa .rodape { margin-top: auto; border-top: 1px solid #26374F; padding-top: 6mm; font-size: 9pt; color: #AEBBCD; }
+  .caixa { border: 1px solid var(--borda); border-left: 4px solid var(--secundaria); background: var(--info-fundo); padding: 9pt 11pt; border-radius: 4px; margin: 10pt 0; break-inside: avoid; }
+  .caixa.ok { border-left-color: var(--positivo); background: var(--positivo-fundo); }
+  .caixa.alerta { border-left-color: var(--negativo); background: var(--negativo-fundo); }
+  .caixa.ambar { border-left-color: var(--primaria); background: #FBF1E0; }
+  .caixa p:last-child, .caixa ul:last-child { margin-bottom: 0; }
+  .rotulo { font-family: "IBM Plex Mono", monospace; font-size: 8.5pt; letter-spacing: .08em; text-transform: uppercase; color: var(--suave); display: block; margin-bottom: 3pt; }
+  table { width: 100%; border-collapse: collapse; margin: 8pt 0 12pt; font-size: 9.5pt; break-inside: avoid; }
+  th { text-align: left; background: var(--escuro); color: #F5F2EA; font-family: "Space Grotesk", sans-serif; font-weight: 500; padding: 6pt 7pt; }
+  td { padding: 6pt 7pt; border-bottom: 1px solid var(--borda); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--fundo); }
+  .pontos { counter-reset: p; list-style: none; padding: 0; }
+  .pontos li { counter-increment: p; padding: 8pt 10pt 8pt 38pt; position: relative; border: 1px solid var(--borda); border-radius: 4px; margin-bottom: 6pt; background: var(--fundo); break-inside: avoid; }
+  .pontos li::before { content: counter(p, decimal-leading-zero); position: absolute; left: 10pt; top: 8pt; font-family: "IBM Plex Mono", monospace; color: var(--primaria); font-weight: 500; }
+  .check { list-style: none; padding: 0; }
+  .check li { padding-left: 20pt; position: relative; }
+  .check li::before { content: "☐"; position: absolute; left: 0; color: var(--primaria); font-size: 12pt; line-height: 1.2; }
+  .fontes { font-size: 8.8pt; color: var(--suave); }
+  .fontes li { margin-bottom: 2pt; word-break: break-word; }
+  .pe { font-size: 8.5pt; color: var(--suave); border-top: 1px solid var(--borda); padding-top: 6pt; margin-top: 14pt; }
+</style>
+</head>
+<body>
+
+<div class="capa">
+  <div class="marca">LHS QUANT LAB · @lhsquantlab</div>
+  <h1>Operar forex a partir do Brasil: <em>é um direito</em>, com regras e imposto</h1>
+  <p class="sub">Como funciona operar moedas em corretoras internacionais sendo residente no Brasil: o que a lei permite, como mandar o dinheiro, como declarar e pagar imposto, e os riscos que ninguém deve esconder.</p>
+  <div class="rodape">
+    Versão de outubro de 2026 · Material educativo. Não é parecer jurídico, não é consultoria tributária e não é recomendação de investimento.
+    Normas mudam: confirme os pontos fiscais com um contador antes de declarar.
+  </div>
+</div>
+
+<section>
+  <h2><span class="num">00</span>Resumo em uma página</h2>
+  <ol class="pontos">
+    <li><strong>Forex não está na B3 porque a B3 não regula nada.</strong> Ela é uma bolsa. Quem regula é a <strong>CVM</strong> (valores mobiliários e derivativos) e o <strong>Banco Central</strong> (câmbio). Nenhuma instituição brasileira oferece hoje forex alavancado de varejo, então quem quer operar o mercado global de moedas usa uma corretora no exterior.</li>
+    <li><strong>Não há lei que proíba o residente de investir no exterior.</strong> A Constituição garante que ninguém é obrigado a deixar de fazer algo senão em virtude de lei (art. 5º, II). O novo marco cambial (Lei 14.286/2021) permite manter e aplicar recursos fora do país, desde que o dinheiro saia pelos canais oficiais.</li>
+    <li><strong>O próprio Estado reconhece a atividade e a tributa.</strong> A Lei 14.754/2023 lista expressamente os <strong>derivativos no exterior</strong> como aplicação financeira e cobra <strong>15% sobre o ganho, apurado uma vez por ano</strong> na declaração do IR.</li>
+    <li><strong>A CVM pune quem oferta, não quem investe.</strong> Os alertas e as <em>stop orders</em> da CVM se dirigem a corretoras, divulgadores e "parceiros" que captam clientes no Brasil sem autorização. O investidor aparece nesses atos como alguém a ser protegido e orientado a denunciar.</li>
+    <li><strong>Direito vem com dever e risco.</strong> Remessa só por banco ou corretora de câmbio autorizada. Declarar saldo e ganhos todo ano. E saber que, fora do Brasil, não há FGC nem CVM para socorrer, e que a maioria das contas de varejo alavancadas perde dinheiro.</li>
+  </ol>
+  <div class="caixa ambar">
+    <span class="rotulo">A tese deste material</span>
+    <p>Operar forex numa corretora internacional, <strong>por iniciativa própria</strong>, com dinheiro enviado <strong>pelo câmbio oficial</strong> e <strong>declarado à Receita</strong>, é exercer a liberdade de investir que a lei brasileira garante. O que é irregular é a captação de clientes no Brasil por quem não tem autorização, e o envio de dinheiro por fora do sistema.</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">01</span>Por que forex "não é da B3"</h2>
+  <p>Há uma confusão comum: dizer que forex "não é regulado pela B3" como se isso o tornasse proibido. Não é assim que o sistema funciona.</p>
+  <table>
+    <tr><th style="width:26%">Quem</th><th>O que faz</th><th style="width:32%">Relação com forex</th></tr>
+    <tr><td><strong>B3</strong></td><td>Bolsa: lista e liquida ativos e contratos. Não cria regras de mercado nem fiscaliza investidores.</td><td>Oferece contratos de câmbio regulados (dólar e mini-dólar futuro).</td></tr>
+    <tr><td><strong>CVM</strong></td><td>Regula e fiscaliza valores mobiliários, derivativos e quem os oferece ao público no Brasil (Lei 6.385/1976).</td><td>Considera irregular a <strong>oferta</strong> a brasileiros por corretora sem registro.</td></tr>
+    <tr><td><strong>Banco Central</strong></td><td>Regula o mercado de câmbio e o capital brasileiro no exterior (Lei 14.286/2021).</td><td>Define como o dinheiro pode sair e voltar.</td></tr>
+    <tr><td><strong>Receita Federal</strong></td><td>Tributa a renda, inclusive a obtida no exterior.</td><td>Tributa o ganho com derivativos no exterior (Lei 14.754/2023).</td></tr>
+  </table>
+  <h3>O que existe de regulado no Brasil</h3>
+  <p>Quem quer exposição a moedas com toda a proteção local tem a B3: <span class="mono">DOL</span> (dólar cheio), <span class="mono">WDO</span> (mini-dólar) e futuros de outras moedas, com corretora brasileira, CVM e câmara de compensação. O que <strong>não existe</strong> aqui é o forex global de varejo: EURUSD, GBPUSD, USDJPY e dezenas de outros pares, 24 horas por dia, em lotes pequenos. Para isso, o caminho é uma corretora estrangeira.</p>
+  <div class="caixa">
+    <span class="rotulo">Ponto-chave</span>
+    <p>Um mercado "não estar na B3" quer dizer só que <strong>não é negociado aqui</strong>. Isso não o torna proibido. Ações americanas também não estão na B3 (fora os BDRs), e milhões de brasileiros as compram legalmente em corretoras no exterior.</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">02</span>A defesa: por que o residente pode operar</h2>
+
+  <h3>1. Legalidade e livre iniciativa</h3>
+  <p>A Constituição diz que "ninguém será obrigado a fazer ou deixar de fazer alguma coisa senão em virtude de lei" (art. 5º, II) e funda a ordem econômica na livre iniciativa (art. 170). A Declaração de Direitos de Liberdade Econômica (Lei 13.874/2019) reforça que a atividade econômica privada se presume livre e que a intervenção do Estado é exceção. Para proibir alguém de aplicar o próprio dinheiro no exterior, seria preciso uma lei dizendo isso, e essa lei não existe.</p>
+
+  <h3>2. O marco cambial permite investir fora</h3>
+  <p>A Lei 14.286/2021, em vigor desde o fim de 2022, modernizou o câmbio e trata expressamente do <strong>capital brasileiro no exterior</strong>, regulamentado pela Resolução BCB 279/2022. A pessoa física pode manter recursos e aplicações fora do país. A condição é que a remessa passe por uma instituição autorizada pelo Banco Central e que os valores sejam informados quando a regra exigir.</p>
+
+  <h3>3. A lei tributária reconhece a operação</h3>
+  <p>A Lei 14.754/2023 define "aplicações financeiras no exterior" de forma ampla. Entram depósitos remunerados, cotas de fundos, títulos de renda fixa e variável, instrumentos financeiros e <strong>derivativos</strong>. Ela diz como esse ganho é tributado desde 1º/1/2024. O ordenamento não regula o imposto de uma atividade que ele mesmo proíbe ao contribuinte: ao tributar, reconhece a operação como lícita.</p>
+
+  <h3>4. O alvo da CVM é a oferta irregular</h3>
+  <p>Quando a CVM age sobre forex, ela emite <strong>alertas</strong> e <strong>stop orders</strong> contra corretoras estrangeiras e pessoas que captam clientes no Brasil sem autorização. O caso típico é a determinação de suspender a oferta, com multa diária de R$ 1.000 em caso de descumprimento. A própria CVM explica que a stop order é medida <strong>cautelar</strong>, voltada à oferta, e orienta o investidor que recebe a proposta a <strong>denunciar</strong> pelo Serviço de Atendimento ao Cidadão. Nesses atos, o investidor é a parte protegida, não a infratora.</p>
+
+  <div class="caixa alerta">
+    <span class="rotulo">Onde a tese tem limite (honestidade intelectual)</span>
+    <ul>
+      <li>Não existe uma norma que diga, com todas as letras, "o investidor pessoa física pode operar forex em corretora sem registro na CVM". A defesa se apoia na <strong>ausência de proibição</strong> e nas leis acima, não em uma autorização expressa.</li>
+      <li>Ser intermediário é outra conversa. Indicar clientes em troca de comissão (<em>introducing broker</em>, afiliado), vender sinais ou fazer gestão de conta de terceiros pode configurar atividade irregular perante a CVM.</li>
+      <li>Mandar dinheiro por fora do câmbio oficial pode configurar <strong>evasão de divisas</strong> (Lei 7.492/1986, art. 22). Isso vale para dólar-cabo, depósito a um "agente" ou Pix para terceiros que "repassam" à corretora.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">03</span>Como fazer do jeito certo: o dinheiro</h2>
+  <ol>
+    <li><strong>Envie por um canal autorizado pelo Banco Central:</strong> banco, corretora de câmbio ou plataforma de remessa autorizada, sempre em seu nome e com contrato de câmbio.</li>
+    <li><strong>Use a finalidade correta na remessa.</strong> A alíquota de IOF depende dela. Pelos decretos de 2025, a remessa com finalidade de <strong>investimento</strong> paga 1,1%, e a transferência para <strong>conta própria</strong> no exterior pode pagar 3,5%. Confirme o enquadramento com a instituição antes de enviar.</li>
+    <li><strong>Deposite na corretora a partir de conta no seu nome.</strong> Evite intermediários: dinheiro que passa por terceiros perde rastreabilidade e é o padrão dos golpes.</li>
+    <li><strong>Guarde tudo:</strong> contratos de câmbio, comprovantes de depósito e saque e extratos mensais da corretora. São a sua prova de origem e destino dos recursos.</li>
+    <li><strong>No retorno, faça o caminho inverso pelo câmbio oficial.</strong> Assim a entrada fica documentada.</li>
+  </ol>
+  <div class="caixa ok">
+    <span class="rotulo">Regra de ouro</span>
+    <p>Se o dinheiro saiu pelo câmbio oficial, em seu nome, e está declarado, você tem a documentação para defender cada centavo. Se saiu "por fora", nenhum argumento jurídico deste material te protege.</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">04</span>Impostos e declarações</h2>
+  <p>Desde 1º de janeiro de 2024, a Lei 14.754/2023 (regulamentada pela IN RFB 2.180/2024) organizou a tributação de pessoas físicas com aplicações no exterior:</p>
+  <ul>
+    <li><strong>Alíquota de 15%</strong> sobre o ganho, sem faixas e sem deduções.</li>
+    <li><strong>Apuração anual</strong>, na Declaração de Ajuste do IR. Não há DARF mensal para essas aplicações.</li>
+    <li>O ganho é tributado quando <strong>realizado</strong>: no fechamento da operação, no resgate ou na liquidação.</li>
+    <li>A <strong>variação cambial</strong> entra na conta do ganho. A conversão para reais segue as regras da IN RFB 2.180/2024, e é aqui que o contador faz diferença.</li>
+    <li><strong>Perdas compensam ganhos</strong> de aplicações no exterior no mesmo ano. Se sobrar perda no fim do ano, ela pode ser usada nos anos seguintes.</li>
+    <li><strong>Não há isenção</strong> como a de R$ 20 mil por mês das ações na B3.</li>
+  </ul>
+
+  <table>
+    <tr><th style="width:28%">Comparação</th><th>Day trade na B3 (ex.: WDO)</th><th>Forex no exterior (Lei 14.754)</th></tr>
+    <tr><td>Alíquota</td><td>20%</td><td>15%</td></tr>
+    <tr><td>Quando pagar</td><td>Todo mês, por DARF</td><td>Uma vez por ano, na declaração</td></tr>
+    <tr><td>Imposto retido na fonte</td><td>1% sobre o ganho do dia ("dedo-duro")</td><td>Não há retenção no Brasil</td></tr>
+    <tr><td>Compensação de perdas</td><td>Só com ganhos de day trade</td><td>Entre aplicações no exterior, inclusive em anos seguintes</td></tr>
+    <tr><td>Proteção ao investidor</td><td>CVM, B3, câmara de compensação</td><td>Só a do regulador do país da corretora</td></tr>
+  </table>
+
+  <h3>O que declarar</h3>
+  <ul class="check">
+    <li><strong>DIRPF, ficha Bens e Direitos:</strong> o saldo da conta na corretora em 31/12, com o país da corretora.</li>
+    <li><strong>DIRPF, apuração das aplicações no exterior:</strong> ganhos e perdas realizados no ano, com o imposto de 15% calculado na própria declaração.</li>
+    <li><strong>Banco Central, CBE (Capitais Brasileiros no Exterior):</strong> obrigatória se a soma dos seus ativos fora do país chegar a <strong>US$ 1 milhão</strong> em 31/12 (Resolução BCB 279/2022).</li>
+  </ul>
+  <div class="caixa">
+    <span class="rotulo">Exemplo simplificado</span>
+    <p>No ano, você fechou operações com ganho equivalente a R$ 12.000 e perda de R$ 4.000. Resultado líquido: R$ 8.000. Imposto: 15% × 8.000 = <strong>R$ 1.200</strong>, pago com a declaração do ano seguinte. Se o ano fechasse negativo, o saldo de perda ficaria para compensar ganhos futuros.</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">05</span>As ressalvas que ninguém deve esconder</h2>
+  <p>Defender o direito de operar não é dizer que operar é seguro. É justamente porque é um direito que o operador precisa de informação completa.</p>
+  <table>
+    <tr><th style="width:30%">Risco</th><th>O que significa na prática</th></tr>
+    <tr><td><strong>Sem rede de proteção brasileira</strong></td><td>Não há FGC, CVM nem ouvidoria da B3. Se a corretora quebrar ou travar um saque, a briga é no país dela, sob a lei dela.</td></tr>
+    <tr><td><strong>Regulação de fachada</strong></td><td>Muitas corretoras atendem brasileiros por entidades em jurisdições de fiscalização fraca. A mesma marca pode ter um braço bem regulado na Europa e outro, menos protegido, para clientes do Brasil. Veja qual entidade assina o seu contrato.</td></tr>
+    <tr><td><strong>Alavancagem</strong></td><td>Uma alavancagem de 1:500 faz um movimento de 0,2% zerar uma conta. Nos avisos obrigatórios das corretoras reguladas na Europa, a maioria das contas de varejo em CFDs perde dinheiro, tipicamente entre 70% e 80%.</td></tr>
+    <tr><td><strong>Custos invisíveis</strong></td><td>Spread, comissão, slippage e swap corroem estratégias que parecem lucrativas. Nos backtests da LHS Quant Lab, setups populares que pareciam bons <strong>sem custos</strong> foram reprovados depois dos custos reais.</td></tr>
+    <tr><td><strong>Golpes</strong></td><td>"Gerente de conta" que opera por você, sinais pagos com promessa de lucro, depósito via Pix para terceiros, bônus que impede o saque. São os sinais clássicos.</td></tr>
+  </table>
+  <div class="caixa alerta">
+    <span class="rotulo">Antes de abrir conta</span>
+    <ul>
+      <li>Pesquise o nome da corretora nos <strong>alertas e stop orders da CVM</strong> (gov.br/cvm).</li>
+      <li>Confira no site do regulador estrangeiro se a licença é da <strong>entidade que vai te atender</strong>.</li>
+      <li>Faça um saque pequeno logo no início, para testar se o dinheiro volta.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">06</span>Checklist do operador que está em dia</h2>
+  <ul class="check">
+    <li>Abri a conta por <strong>iniciativa própria</strong>, sem "assessor" ou "parceiro" captando no Brasil.</li>
+    <li>Sei qual <strong>entidade e regulador</strong> assinam meu contrato, e a corretora não tem alerta da CVM.</li>
+    <li>Mando e recebo dinheiro <strong>só pelo câmbio oficial</strong>, em meu nome, com contrato de câmbio guardado.</li>
+    <li>Escolhi a <strong>finalidade correta</strong> da remessa e conferi o IOF.</li>
+    <li>Baixo e guardo os <strong>extratos mensais</strong> e o relatório anual da corretora.</li>
+    <li>Declaro o <strong>saldo em 31/12</strong> em Bens e Direitos.</li>
+    <li>Apuro os <strong>ganhos e perdas do ano</strong> e pago os 15% na declaração.</li>
+    <li>Acompanho o limite de <strong>US$ 1 milhão</strong> da CBE.</li>
+    <li>Não vendo sinais, não opero conta de terceiros e não ganho comissão por indicar corretora.</li>
+    <li>Testo a estratégia com <strong>dados e custos reais</strong> antes de arriscar dinheiro.</li>
+  </ul>
+
+  <h3>Base legal citada</h3>
+  <ul class="fontes">
+    <li>Constituição Federal, art. 5º, II, e art. 170</li>
+    <li>Lei 13.874/2019 (Declaração de Direitos de Liberdade Econômica)</li>
+    <li>Lei 14.286/2021 (marco cambial) e Resoluções BCB 277, 279 e 280/2022</li>
+    <li>Lei 14.754/2023 e IN RFB 2.180/2024 (tributação de aplicações no exterior)</li>
+    <li>Lei 6.385/1976 (CVM e mercado de valores mobiliários)</li>
+    <li>Lei 7.492/1986, art. 22 (evasão de divisas)</li>
+    <li>Decretos 12.466/2025 e 12.467/2025 (IOF câmbio)</li>
+  </ul>
+  <h3>Fontes de apoio consultadas</h3>
+  <ul class="fontes">
+    <li>Texto da Lei 14.754/2023, art. 3º, §1º: legjur.com/legislacao/htm/lei_00147542023</li>
+    <li>BMA Advogados: compensação de prejuízos de aplicações no exterior (bmalaw.com.br)</li>
+    <li>Mattos Filho: IN que regulamenta a tributação de ativos no exterior (mattosfilho.com.br/unico/tributacao-ativos-exterior)</li>
+    <li>Cescon Barrieu: alterações no IOF para câmbio (cesconbarrieu.com.br)</li>
+    <li>Banco Safra: IOF no câmbio e remessas ao exterior em 2026 (oespecialista.safra.com.br)</li>
+    <li>Alertas da CVM sobre atuação irregular de corretoras de forex (monitormercantil.com.br; infomoney.com.br)</li>
+  </ul>
+  <p class="pe">LHS Quant Lab · Aprenda a testar e operar com dados · @lhsquantlab<br>
+  Material educativo, produzido em outubro de 2026, sem relação com qualquer corretora. Não é parecer jurídico, consultoria tributária nem recomendação de investimento. Operar com alavancagem pode causar perdas maiores que o esperado. Confirme regras fiscais e de câmbio com profissional habilitado antes de agir.</p>
+</section>
+
+</body>
+</html>

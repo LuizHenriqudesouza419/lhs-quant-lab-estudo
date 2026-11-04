@@ -1,0 +1,17 @@
+# Setups do Diário de Trading.
+#   magic:    número mágico do EA (trades com esse magic recebem o setup sozinhos)
+#   backtest: pasta em backtests/ usada na comparação Real × Backtest
+# Trades manuais (magic 0) são marcados no painel, escolhendo um nome desta lista.
+# Um EA também pode mandar o setup no comentário da ordem: "LHS:<nome do setup>".
+setups:
+  Cruzamento SMA 20x50:
+    magic: 20261017
+    backtest: 001_sma20x50_EURUSD_H4
+  Pullback na EMA (M15 com H4/H1):
+    backtest: 002_pullback_ema_EURUSD_H4-H1-M15
+  Bollinger lateral:
+    backtest: 003_bollinger_lateral_EURUSD_H4-H1-M15
+  Rompimento da faixa asiática:
+    backtest: 004.2_rompimento_asia_ultralow_EURUSD_H1
+  Discricionário:
+    backtest:

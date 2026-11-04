@@ -1,0 +1,7 @@
+Critério,Valor,Passou
+≥ 100 operações fora da amostra,36,❌
+Expectativa > 0 R (líquida),+0.105,✅
+"Fator de lucro > 1,2",1.23,✅
+"Melhor que aleatório (p < 0,05)",p = 0.223,❌
+Nenhum ano com DD > 20%,pior -3.0%,✅
+≥ 2 trades/semana e p90 ≤ 5 dias úteis,0.1/sem · p90 99,❌

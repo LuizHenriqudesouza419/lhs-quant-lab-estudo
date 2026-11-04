@@ -1,0 +1,104 @@
+{
+  "BACKTEST_ID": "003.1",
+  "SIMBOLO": "EURUSD",
+  "TFS": [
+    "H4",
+    "H1"
+  ],
+  "DATA_INICIO": "2010-01-01",
+  "BB_PERIODO": 21,
+  "BB_DESVIOS": 2.0,
+  "MEDIA_LONGA": 200,
+  "LATERAL_BARRAS": 20,
+  "ATR_PERIODO": 14,
+  "ADX_PERIODO": 14,
+  "ADX_LATERAL": 20,
+  "GRADE_GATILHO": [
+    "fechou fora",
+    "voltou para dentro"
+  ],
+  "GRADE_LATERAL": [
+    "sem filtro",
+    "incl<1.0",
+    "incl<0.5",
+    "incl<0.25",
+    "ADX<20"
+  ],
+  "GRADE_STOP": [
+    1.5,
+    2.0,
+    3.0
+  ],
+  "GRADE_ZERAR": [
+    false,
+    true
+  ],
+  "SESSAO": [
+    9,
+    21
+  ],
+  "HORA_ZERAR": 23,
+  "MULT_SPREAD_VIRADA": 1.5,
+  "SLIPPAGE_PONTOS": 2,
+  "COMISSAO_USD_LOTE": 0.0,
+  "RISCO_POR_TRADE": 0.01,
+  "MULT_SWAP": 1.0,
+  "INICIO_OOS": {
+    "H4": "2021-01-01",
+    "H1": "2021-01-01"
+  },
+  "MIN_TRADES_TREINO": 60,
+  "N_SIM": 300,
+  "SEED": 42,
+  "CORES": {
+    "fundo": "#0E1726",
+    "superficie": "#16233A",
+    "borda": "#26374F",
+    "texto": "#F5F2EA",
+    "texto_suave": "#AEBBCD",
+    "primaria": "#E9A23B",
+    "texto_sobre_primaria": "#0E1726",
+    "secundaria": "#7FB3E6",
+    "secundaria_texto": "#9CC4EC",
+    "positivo": "#5FCF9B",
+    "positivo_fundo": "#173B33",
+    "negativo": "#F08A6C",
+    "negativo_fundo": "#3D2420",
+    "info_fundo": "#1C3350"
+  },
+  "PONTO": 1e-05,
+  "CONTRATO": 100000.0,
+  "SWAP_COMPRA": -7.48,
+  "SWAP_VENDA": 1.23,
+  "SLIP": 2e-05,
+  "DUR_H": {
+    "H4": 4,
+    "H1": 1
+  },
+  "HORAS_VIRADA": {
+    "H4": [
+      20,
+      0
+    ],
+    "H1": [
+      22,
+      23,
+      0
+    ]
+  },
+  "ESCOLHA": {
+    "H4": {
+      "gatilho": "voltou para dentro",
+      "regra": "ADX<20",
+      "stop_atr": 3.0,
+      "zerar": false
+    },
+    "H1": {
+      "gatilho": "voltou para dentro",
+      "regra": "incl<0.5",
+      "stop_atr": 3.0,
+      "zerar": true
+    }
+  },
+  "MELHOR_TF": "H1"
+}

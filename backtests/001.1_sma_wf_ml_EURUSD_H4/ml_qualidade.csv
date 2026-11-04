@@ -1,0 +1,7 @@
+,Logística,Random forest
+AUC,0.5196,0.5082
+% operações aceitas,11.4967,3.9046
+Win rate aceitas %,52.8302,44.4444
+Win rate rejeitadas %,34.5588,36.3431
+Expectativa aceitas %,0.302,0.0486
+Expectativa rejeitadas %,-0.1076,-0.0649

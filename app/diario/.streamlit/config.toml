@@ -1,0 +1,23 @@
+# Tema Terminal Âmbar (fonte: estilo/paleta.json, modo escuro)
+[theme]
+base = "dark"
+primaryColor = "#E9A23B"
+backgroundColor = "#0E1726"
+secondaryBackgroundColor = "#16233A"
+textColor = "#F5F2EA"
+borderColor = "#26374F"
+linkColor = "#7FB3E6"
+font = "IBM Plex Sans:https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap"
+headingFont = "Space Grotesk:https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap"
+codeFont = "IBM Plex Mono:https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap"
+
+[server]
+headless = true
+address = "localhost"  # só este PC enxerga o painel
+port = 8765
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"

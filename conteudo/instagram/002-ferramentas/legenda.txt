@@ -1,0 +1,15 @@
+Não existe day trading baseado em evidência sem as ferramentas certas. 🛠️
+
+Estas são as ferramentas do nosso laboratório:
+
+📈 MetaTrader 5: os dados da corretora, com o spread real
+🐍 Anaconda, Python e Jupyter: o motor dos backtests
+🤖 MQL5: o setup aprovado vira robô
+🧠 Claude (IA): o assistente de pesquisa e programação
+🗂️ GitHub, Obsidian e Telegram: registro, diário e alertas
+
+Quase tudo é gratuito. O diferencial não está na ferramenta, e sim no método: custos reais, teste fora da amostra e comparação com o acaso.
+
+👇 Qual delas você quer ver em detalhe? Comente aqui.
+
+#daytrading #python #mql5 #metatrader5 #backtest #tradingquantitativo #forex #inteligenciaartificial #jupyter #anaconda

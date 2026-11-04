@@ -1,0 +1,57 @@
+{
+  "id": "001.1",
+  "base": "001",
+  "simbolo": "EURUSD",
+  "timeframe": "H4",
+  "media_rapida": 20,
+  "media_lenta": 50,
+  "slippage_pontos": 2,
+  "comissao_pct": 0.0,
+  "data_inicio": "2010-01-01",
+  "inicio_oos": "2014-01-01",
+  "dados_ate": "2026-10-16",
+  "walkforward": {
+    "anos_treino": 4,
+    "anos_teste": 1,
+    "grade_rapidas": [
+      5,
+      10,
+      20,
+      30,
+      50
+    ],
+    "grade_lentas": [
+      50,
+      100,
+      150,
+      200
+    ],
+    "min_trades_treino": 30,
+    "wfe": 0.14
+  },
+  "ml": {
+    "tecnica": "meta-labeling",
+    "modelos": [
+      "Logística",
+      "Random forest"
+    ],
+    "features": [
+      "adx",
+      "atr_pct",
+      "regime_vol",
+      "incl_lenta",
+      "momento_20",
+      "dist_sma200",
+      "cruzamentos_50",
+      "direcao"
+    ],
+    "prob_minima": 0.5,
+    "min_trades_ml": 100,
+    "janela": "expansiva, retreino anual, purging por data de saída",
+    "percentil_vs_filtro_aleatorio": {
+      "Logística": 99.0,
+      "Random forest": 71.0
+    }
+  },
+  "seed": 42
+}

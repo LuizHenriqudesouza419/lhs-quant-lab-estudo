@@ -1,0 +1,17 @@
+# dados de mercado (atalho para C:\Dados\mercado) — nunca versionar
+dados/
+# resultados pesados de backtest
+resultados/*
+!resultados/.gitkeep
+*.duckdb
+*.parquet
+# segredos (token do Telegram, login MT5)
+.env
+# Python / Jupyter
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+# MQL5 compilado
+*.ex5
+# logs das rotinas
+logs/
